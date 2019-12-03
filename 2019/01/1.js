@@ -1,3 +1,4 @@
+// @flow
 // Pipe the input to this script to get the result
 
 const readline = require('readline');
@@ -5,7 +6,7 @@ const readline = require('readline');
 async function* processLineByLine() {
   const rl = readline.createInterface({
     input: process.stdin,
-    crlfDelay: Infinity
+    crlfDelay: Infinity,
   });
   // Note: we use the crlfDelay option to recognize all instances of CR LF
   // ('\r\n') in input.txt as a single line break.

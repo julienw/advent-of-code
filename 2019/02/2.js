@@ -1,3 +1,4 @@
+// @flow
 // Pipe the input to this script to get the result
 
 const readline = require('readline');
@@ -5,7 +6,7 @@ const readline = require('readline');
 async function* processLineByLine() {
   const rl = readline.createInterface({
     input: process.stdin,
-    crlfDelay: Infinity
+    crlfDelay: Infinity,
   });
   // Note: we use the crlfDelay option to recognize all instances of CR LF
   // ('\r\n') in input.txt as a single line break.
@@ -41,11 +42,13 @@ function multiply(positions, startIndex) {
 
 function processOnePosition(positions, startIndex) {
   if (startIndex >= positions.length) {
-    throw new Error(`Oops we don't have anymore input at position ${startIndex}`);
+    throw new Error(
+      `Oops we don't have anymore input at position ${startIndex}`
+    );
   }
 
   const opcode = +positions[startIndex];
-  switch(opcode) {
+  switch (opcode) {
     case 1:
       add(positions, startIndex);
       return true;
@@ -59,15 +62,13 @@ function processOnePosition(positions, startIndex) {
   }
 }
 
-function printResult(result) {
-  console.log(result);
-}
-
 function alterProgram(positions, noun, verb) {
   positions[1] = noun;
   positions[2] = verb;
 }
 
+// This is used for debug only
+// eslint-disable-next-line no-unused-vars
 function printFullState(positions) {
   console.log(positions.join(','));
 }
@@ -75,7 +76,11 @@ function printFullState(positions) {
 async function run() {
   const lineIterator = processLineByLine();
   const line = (await lineIterator.next()).value;
-  const program = splitIntoPositions(line);
+  if (!line) {
+    throw new Error('No input!');
+  }
+  // $FlowExpectError I know what I'm doing
+  const program: Array<string | number> = splitIntoPositions(line);
   const expectedResult = 19690720;
 
   for (let noun = 0; noun < 99; noun++) {
@@ -88,7 +93,7 @@ async function run() {
         let continueProgram = true;
         let index = 0;
         while (continueProgram) {
-          continueProgram = processOnePosition(positions, index)
+          continueProgram = processOnePosition(positions, index);
           index += 4;
         }
 
@@ -98,7 +103,7 @@ async function run() {
           console.log(noun, verb);
           process.exit(0);
         }
-      } catch(e) {
+      } catch (e) {
         console.log('Got an error, continuing', e);
       }
     }
