@@ -58,6 +58,7 @@ function findMaxCoordinates(wire) {
   return maxCoordinates;
 }
 
+type Point = {| x: number, y: number |};
 /**
  * This class hold sa grid in the form of a linear Uint8Array, where each
  * value's bit decomposition means wire number "bit" is here.
@@ -66,14 +67,14 @@ function findMaxCoordinates(wire) {
 class Grid {
   _size: {| width: number, height: number |};
   _grid: Uint8Array;
-  _startingPoint: {| x: number, y: number |};
+  _startingPoint: Point;
   constructor(size, startingPoint) {
     this._grid = new Uint8Array(size.width * size.height);
     this._size = size;
     this._startingPoint = { ...startingPoint };
   }
 
-  writePoint(bit, point) {
+  writePoint(bit, point: Point) {
     assert(point.x >= 0);
     assert(point.y >= 0);
     assert(point.x < this._size.width);
@@ -84,37 +85,57 @@ class Grid {
     this._grid[index] |= 1 << bit;
   }
 
-  movePoint(point, direction) {
+  movePoint(point: Point, direction) {
     switch (direction) {
       case 'R':
-        point.x++;
-        break;
+        return {
+          ...point,
+          x: point.x + 1,
+        };
       case 'D':
-        point.y--;
-        break;
+        return {
+          ...point,
+          y: point.y - 1,
+        };
       case 'L':
-        point.x--;
-        break;
+        return {
+          ...point,
+          x: point.x - 1,
+        };
       case 'U':
-        point.y++;
-        break;
+        return {
+          ...point,
+          y: point.y + 1,
+        };
       default:
         throw new Error(`Unknown direction ${direction}`);
     }
   }
 
-  writeWireSegment(bit, currentPoint, direction, distance) {
+  *wireSegmentRouteGenerator(start: Point, direction, distance) {
+    let point = start;
     for (let i = 0; i < distance; i++) {
-      this.movePoint(currentPoint, direction);
-      this.writePoint(bit, currentPoint);
+      point = this.movePoint(point, direction);
+      yield point;
+    }
+    return point;
+  }
+
+  *wireRouteGenerator(wire) {
+    let currentPoint: Point = this._startingPoint;
+
+    for (const { direction, distance } of wire) {
+      currentPoint = yield* this.wireSegmentRouteGenerator(
+        currentPoint,
+        direction,
+        distance
+      );
     }
   }
 
   writeWire(bit, wire) {
-    const currentPoint = { ...this._startingPoint };
-
-    for (const { direction, distance } of wire) {
-      this.writeWireSegment(bit, currentPoint, direction, distance);
+    for (const point of this.wireRouteGenerator(wire)) {
+      this.writePoint(bit, point);
     }
   }
 
