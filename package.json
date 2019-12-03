@@ -1,0 +1,32 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Julien Wajsberg <felash@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "flow": "flow --max-warnings 0",
+    "flow:ci": "flow check --max-warnings 0",
+    "flow-stop": "flow stop",
+    "lint": "eslint .",
+    "lint-fix": "yarn lint --fix",
+    "test-all": "run-p flow lint"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-flow": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-flowtype": "^4.5.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "flow-bin": "^0.113.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1"
+  }
+}
