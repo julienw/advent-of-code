@@ -25,17 +25,13 @@ function hasAdjacentDigits(number: string) {
   return adjacentRe.test(number);
 }
 
+const increasingRe = /^0*1*2*3*4*5*6*7*8*9*$/;
 function hasIncreasingSequence(number: string) {
   if (number.length <= 1) {
     return true;
   }
 
-  for (let i = 1; i < number.length; i++) {
-    if (+number[i] - +number[i - 1] < 0) {
-      return false;
-    }
-  }
-  return true;
+  return increasingRe.test(number);
 }
 
 function isExpected(number) {
