@@ -87,13 +87,13 @@ function input(state, strModes) {
 }
 
 function output(state, strModes) {
-  const { positions, index } = state;
+  const { positions, index, outputs } = state;
   const paramsCount = 1;
   const modes = Array.from(strModes.padStart(paramsCount, '0')).reverse();
 
   let paramIndex = 1;
   const input = fetch(positions, index, modes, paramIndex++);
-  console.log(input);
+  outputs.push(input);
 
   state.index += paramsCount + 1;
   assert.equal(paramsCount + 1, paramIndex);
@@ -169,11 +169,12 @@ function equals(state, strModes) {
 }
 
 type Operation = (
-  state: {
+  state: {|
     positions: Array<string | number>,
     index: number,
     inputs: Array<string | number>,
-  },
+    outputs: Array<number>,
+  |},
   modes: string
 ) => void;
 
@@ -223,13 +224,14 @@ function printFullState(positions) {
   console.log(positions.join(','));
 }
 
-function runProgram(program, inputs) {
+function runProgram(program, inputs): number[] {
   const positions: Array<string | number> = (program.slice(): any);
 
   const state = {
     positions,
     index: 0,
     inputs: inputs.slice(),
+    outputs: [],
   };
 
   let continueProgram = true;
@@ -237,6 +239,33 @@ function runProgram(program, inputs) {
     //printFullState(positions);
     continueProgram = processOnePosition(state);
   }
+
+  return state.outputs;
+}
+
+function runProgramWithPhases(program, phases: number[]) {
+  return phases.reduce((previousResult, phase) => {
+    const [output] = runProgram(program, [phase, previousResult]);
+    return output;
+  });
+}
+
+function findPermutations(source: number[]): number[][] {
+  if (source.length === 1) {
+    return [source];
+  }
+
+  const result = [];
+
+  for (let i = 0; i < source.length; i++) {
+    const smallerSource = source.slice();
+    const [val] = smallerSource.splice(i, 1);
+    const smallerPermutations = findPermutations(smallerSource);
+    result.push(
+      ...smallerPermutations.map(permutation => [val, ...permutation])
+    );
+  }
+  return result;
 }
 
 async function run() {
@@ -246,9 +275,19 @@ async function run() {
     throw new Error('No input!');
   }
   const program: string[] = splitIntoPositions(line);
+  const permutations = findPermutations([0, 1, 2, 3, 4]);
+  const results = new Map();
+  for (const permutation of permutations) {
+    const result = runProgramWithPhases(program, permutation);
+    results.set(permutation.join(''), result);
+  }
 
-  const inputs = [5];
-  runProgram(program, inputs);
+  const maxResult = Math.max(...results.values());
+  const keyForMaxResult = [...results.keys()].find(
+    key => results.get(key) === maxResult
+  );
+
+  console.log(`${String(keyForMaxResult)} => ${maxResult}`);
 }
 
 run();
