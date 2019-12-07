@@ -223,6 +223,22 @@ function printFullState(positions) {
   console.log(positions.join(','));
 }
 
+function runProgram(program, inputs) {
+  const positions: Array<string | number> = (program.slice(): any);
+
+  const state = {
+    positions,
+    index: 0,
+    inputs: inputs.slice(),
+  };
+
+  let continueProgram = true;
+  while (continueProgram) {
+    //printFullState(positions);
+    continueProgram = processOnePosition(state);
+  }
+}
+
 async function run() {
   const lineIterator = processLineByLine();
   const line = (await lineIterator.next()).value;
@@ -231,20 +247,8 @@ async function run() {
   }
   const program: string[] = splitIntoPositions(line);
 
-  const positions: Array<string | number> = (program.slice(): any);
-
-  let continueProgram = true;
-
-  const state = {
-    positions,
-    index: 0,
-    inputs: [5],
-  };
-
-  while (continueProgram) {
-    //printFullState(positions);
-    continueProgram = processOnePosition(state);
-  }
+  const inputs = [5];
+  runProgram(program, inputs);
 }
 
 run();
