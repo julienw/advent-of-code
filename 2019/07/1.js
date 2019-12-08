@@ -247,7 +247,7 @@ function runProgramWithPhases(program, phases: number[]) {
   return phases.reduce((previousResult, phase) => {
     const [output] = runProgram(program, [phase, previousResult]);
     return output;
-  });
+  }, 0);
 }
 
 function findPermutations(source: number[]): number[][] {
