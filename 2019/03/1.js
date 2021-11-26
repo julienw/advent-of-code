@@ -150,7 +150,7 @@ class Grid {
       allIntersects.push(intersectIndex);
     }
 
-    return allIntersects.map(index => ({
+    return allIntersects.map((index) => ({
       x: index % this._size.width,
       y: Math.floor(index / this._size.width),
     }));
@@ -229,7 +229,7 @@ async function run() {
 
   const intersects = grid.extractIntersections();
   console.log(intersects);
-  const distances = intersects.map(intersect =>
+  const distances = intersects.map((intersect) =>
     manhattan(intersect, centralPort)
   );
   console.log(distances);

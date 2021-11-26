@@ -15,7 +15,8 @@ async function* processLineByLine() {
   yield* rl;
 }
 
-const adjacentRe = /(?<!0)00(?!0)|(?<!1)11(?!1)|(?<!2)22(?!2)|(?<!3)33(?!3)|(?<!4)44(?!4)|(?<!5)55(?!5)|(?<!6)66(?!6)|(?<!7)77(?!7)|(?<!8)88(?!8)|(?<!9)99(?!9)/;
+const adjacentRe =
+  /(?<!0)00(?!0)|(?<!1)11(?!1)|(?<!2)22(?!2)|(?<!3)33(?!3)|(?<!4)44(?!4)|(?<!5)55(?!5)|(?<!6)66(?!6)|(?<!7)77(?!7)|(?<!8)88(?!8)|(?<!9)99(?!9)/;
 
 function hasAdjacentDigits(number: string) {
   if (number.length < 2) {
@@ -49,7 +50,7 @@ async function run() {
     throw new Error(`Oops there's no input`);
   }
 
-  const [start, end] = range.split('-').map(str => +str);
+  const [start, end] = range.split('-').map((str) => +str);
 
   let count = 0;
   for (let i = start; i <= end; i++) {

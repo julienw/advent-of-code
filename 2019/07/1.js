@@ -262,7 +262,7 @@ function findPermutations(source: number[]): number[][] {
     const [val] = smallerSource.splice(i, 1);
     const smallerPermutations = findPermutations(smallerSource);
     result.push(
-      ...smallerPermutations.map(permutation => [val, ...permutation])
+      ...smallerPermutations.map((permutation) => [val, ...permutation])
     );
   }
   return result;
@@ -284,7 +284,7 @@ async function run() {
 
   const maxResult = Math.max(...results.values());
   const keyForMaxResult = [...results.keys()].find(
-    key => results.get(key) === maxResult
+    (key) => results.get(key) === maxResult
   );
 
   console.log(`${String(keyForMaxResult)} => ${maxResult}`);

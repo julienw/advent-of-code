@@ -54,7 +54,7 @@ async function run() {
     throw new Error(`Oops there's no input`);
   }
 
-  const [start, end] = range.split('-').map(str => +str);
+  const [start, end] = range.split('-').map((str) => +str);
 
   let count = 0;
   for (let i = start; i <= end; i++) {

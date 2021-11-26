@@ -148,7 +148,7 @@ class Grid {
 
   findStepsToIntersectsForWire(wire, intersects: Point[]) {
     let steps = 0;
-    const intersectIndices = intersects.map(intersect =>
+    const intersectIndices = intersects.map((intersect) =>
       this.indexForPoint(intersect)
     );
     const result = new Array(intersects.length);
@@ -177,7 +177,7 @@ class Grid {
       allIntersects.push(intersectIndex);
     }
 
-    return allIntersects.map(index => this.indexToPoint(index));
+    return allIntersects.map((index) => this.indexToPoint(index));
   }
 
   toString() {

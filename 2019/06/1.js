@@ -33,7 +33,7 @@ function completeDepthInformation() {
   function completeDepthFor(name, depth) {
     const object = ensure(objects.get(name));
     object.depth = depth;
-    object.children.forEach(child => completeDepthFor(child, depth + 1));
+    object.children.forEach((child) => completeDepthFor(child, depth + 1));
   }
 
   // Start with 'COM'
@@ -45,7 +45,7 @@ function sum(...vals) {
 }
 
 function countOrbits() {
-  return sum(...[...objects.values()].map(object => object.depth));
+  return sum(...[...objects.values()].map((object) => object.depth));
 }
 
 async function run() {
