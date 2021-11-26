@@ -84,7 +84,7 @@ function printFullState(positions) {
 async function run() {
   const lineIterator = processLineByLine();
   for await (const line of lineIterator) {
-    // $FlowExpectError I know what I'm doing here
+    // $FlowExpectedError[incompatible-type] I know what I'm doing here
     const positions: Array<string | number> = splitIntoPositions(line);
     alterProgram(positions);
 

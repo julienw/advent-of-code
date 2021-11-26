@@ -116,7 +116,7 @@ function processOnePosition(state) {
     case 2:
     case 3:
     case 4:
-      // $FlowExpectError this works, I know!
+      // $FlowExpectedError[incompatible-type] this works, I know!
       state.index += operations[String(opcode)](
         positions,
         index,

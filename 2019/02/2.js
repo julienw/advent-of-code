@@ -19,9 +19,9 @@ function splitIntoPositions(input) {
 }
 
 function add(positions, startIndex) {
-  const inputIndex1 = positions[startIndex + 1];
-  const inputIndex2 = positions[startIndex + 2];
-  const storeIndex = positions[startIndex + 3];
+  const inputIndex1 = +positions[startIndex + 1];
+  const inputIndex2 = +positions[startIndex + 2];
+  const storeIndex = +positions[startIndex + 3];
   const input1 = +positions[inputIndex1];
   const input2 = +positions[inputIndex2];
   const result = input1 + input2;
@@ -30,9 +30,9 @@ function add(positions, startIndex) {
 }
 
 function multiply(positions, startIndex) {
-  const inputIndex1 = positions[startIndex + 1];
-  const inputIndex2 = positions[startIndex + 2];
-  const storeIndex = positions[startIndex + 3];
+  const inputIndex1 = +positions[startIndex + 1];
+  const inputIndex2 = +positions[startIndex + 2];
+  const storeIndex = +positions[startIndex + 3];
   const input1 = +positions[inputIndex1];
   const input2 = +positions[inputIndex2];
   const result = input1 * input2;
@@ -79,7 +79,8 @@ async function run() {
   if (!line) {
     throw new Error('No input!');
   }
-  // $FlowExpectError I know what I'm doing
+
+  // $FlowExpectedError[incompatible-type] I know what I'm doing
   const program: Array<string | number> = splitIntoPositions(line);
   const expectedResult = 19690720;
 

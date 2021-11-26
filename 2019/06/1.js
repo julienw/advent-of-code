@@ -45,7 +45,7 @@ function sum(...vals) {
 }
 
 function countOrbits() {
-  return sum(...[...objects.values()].map((object) => object.depth));
+  return sum(...[...objects.values()].map((object) => object.depth || 0));
 }
 
 async function run() {
