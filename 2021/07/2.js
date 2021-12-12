@@ -18,34 +18,19 @@ function collectInitialCrabs(line: string): number[] {
   return line.split(',').map((val) => +val);
 }
 
-// We want to minimize this function for the value n:
-//
-//  The fuel for this distance is the sum of an arithmetic suite.
-//                 |
-//                 v
-//
-//  l   (distance + 1) * distance
-//  ∑   -------------------------
-// i=1             2
-//
-// where
-//   distance = | Ci - n |
-//   l is the number of crabs
-//   Ci is the position of the crab with the index i.
-//
-// After developing this, we see that we want to minimize
-//
-//  l           l                 l
-//  ∑  Ci² + 2n ∑ Ci + kn²     +  ∑ distance
-// i=1         i=1               i=1
-//
-// Because everything is positive, we only need to minimize each part
-// separately.
-// The last term is the median.
-// For the first term we can derive the value and find when the derivate is 0,
-// we get: n =
 function findBestLocation(crabs: number[]): number {
-  const k = crabs.length;
+  const min = Math.min(...crabs);
+  const max = Math.max(...crabs);
+
+  const allFuels = [];
+  let minFuel = +Infinity;
+  for (let i = min; i <= max; i++) {
+    const requiredFuel = computeRequiredFuel(i, crabs);
+    minFuel = Math.min(requiredFuel, minFuel);
+    allFuels.push({ location: i, requiredFuel });
+  }
+
+  return allFuels.find(({ requiredFuel }) => requiredFuel === minFuel);
 }
 
 function computeRequiredFuelForDistance(distance: number): number {
@@ -75,8 +60,6 @@ async function run() {
   console.log('crabs:', initialCrabs);
   const bestLocation = findBestLocation(initialCrabs);
   console.log('bestLocation:', bestLocation);
-  const requiredFuel = computeRequiredFuel(bestLocation, initialCrabs);
-  printResult(requiredFuel);
 }
 
 run();
