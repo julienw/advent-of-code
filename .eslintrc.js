@@ -37,7 +37,7 @@ module.exports = {
 
     // overriding recommended rules
     'no-constant-condition': ['error', { checkLoops: false }],
-    'no-console': ['error', { allow: ['log', 'warn', 'error'] }],
+    'no-console': ['error', { allow: ['log', 'warn', 'error', 'dir'] }],
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
     // possible errors
