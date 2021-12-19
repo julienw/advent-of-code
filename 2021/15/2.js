@@ -41,12 +41,36 @@ function isPointEqual(a: Point, b: Point) {
   return a.x === b.x && a.y === b.y;
 }
 
+function enlarge(grid: number[][]) {
+  for (const line of grid) {
+    const initialLine = line.slice();
+    [1, 2, 3, 4].forEach((toAdd) => {
+      line.push(
+        ...initialLine.map((risk) =>
+          risk + toAdd > 9 ? risk + toAdd - 9 : risk + toAdd
+        )
+      );
+    });
+  }
+
+  const initialGridLength = grid.length;
+  [1, 2, 3, 4].forEach((toAdd) => {
+    for (let i = 0; i < initialGridLength; i++) {
+      const line = grid[i];
+      grid.push(
+        line.map((risk) => (risk + toAdd > 9 ? risk + toAdd - 9 : risk + toAdd))
+      );
+    }
+  });
+}
+
 class RiskMap {
   grid: Array<Array<GridCell>>;
   size: {| width: number, height: number |};
   neighborsSortedByDistance: Array<Point> = [];
 
   constructor(grid) {
+    enlarge(grid);
     this.grid = grid.map((line) =>
       line.map((risk) => ({
         risk,
