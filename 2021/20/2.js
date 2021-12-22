@@ -97,7 +97,7 @@ async function run() {
 
   debug(grid);
 
-  const enhanceSteps = 2;
+  const enhanceSteps = 50;
   for (let i = 0; i < enhanceSteps; i++) {
     grid = enhance(i, enhancement, grid);
     debug(grid);
