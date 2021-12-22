@@ -33,14 +33,6 @@ function advance(position: number, byValue: number): number {
   return (position + byValue) % 10;
 }
 
-// Little wrapper so that Flow is happy
-function wrapEndlessGenerator<T>(
-  endlessGenerator: Generator<T, any, any>
-): () => T {
-  // $FlowIgnoreError[incompatible-return]
-  return () => endlessGenerator.next().value;
-}
-
 type State = {|
   positions: [number, number],
   scores: [number, number],
