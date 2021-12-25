@@ -42,55 +42,33 @@ class Scanner {
     // Original
     // x, y, z
     //
-    // Rotating around x
-    // x1 x, -z, y
-    // x2 x, -y, -z
-    // x3 x, z, -y
+    // Rotating around z towards the top   y
+    // x, y, z (original)                  ↑
+    // y, -x, z                            |
+    // -x, -y, z                           o--> x
+    // -y, x, z                           z
     //
-    // Rotating around y
-    // y1 -z, y, x
-    // y2 -x, y, -z
-    // y3 z, y, -x
+    // Rotating around z towards the bottom  y   ( can be deduced from the previous one by negating x and z )
+    // -x, y, -z                             ↑
+    // y, x, -z                              |
+    // x, -y, -z,                      -x <--.
+    // -y, -x, -z,                            -z
     //
-    // Rotating around z
-    // z1 -y, x, z
-    // z2 -x, -y, z
-    // z3 y, -x, z
+    // Rotating around y towards the top   x
+    // z, x, y                             ↑
+    // x, -z, y                            |
+    // -z, -x, y                           o--> z
+    // -x, z, y                           y
     //
-    // First rotation around x + Rotation around y
-    // x1+y1 -y, -z, x
-    // x1+y2 -x, -z, -y
-    // x1+y3 y, -z, -x
+    // Rotating around y towards the bottom     ( will be deduced )
     //
-    // First rotation around x + Rotation around z
-    // x1+z1 z, x, y
-    // x1+z2 -x, z, y
-    // x1+z3 -z, -x, y
+    // Rotating around x towards the top   z
+    // y, z, x                             ↑
+    // z, -y, x                            |
+    // -y, -z, x                           o--> y
+    // -z, y, x                           x
     //
-    // Second rotation around x + Rotation around y
-    // x2+y1 z, -y, x
-    // x2+y2 -x, -y, z // dupe z2
-    // x2+y3 -z, -y, -x
-    //
-    // Second rotation around x + Rotation around z
-    // x2+z1 y, x, -z
-    // x2+z2 -x, y, -z // dupe y2
-    // x2+z3 -y, -x, -z
-    //
-    // Third rotation around x + Rotation around y
-    // x3+y1 y, z, x
-    // x3+y2 -x, z, y
-    // x3+y3 -y, z, -x
-    //
-    // Third rotation around x + Rotation around z
-    // x3+z1 -z, x, -y
-    // x3+z2 -x, -z, -y
-    // x3+z3 z, -x, -y
-    //
-    // And now the 3-rotation possibilities
-    // x1+y1+z1 -y, -z, x => z, -y, x // dupe x2+y1 (means x1+z1 = x2, but this isn't the case)
-    //
-    //
+    // Rotating around x towards the bottom     ( will be deduced )
   }
 
   debug() {
