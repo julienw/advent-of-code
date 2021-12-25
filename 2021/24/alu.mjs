@@ -15,6 +15,7 @@ export function parseProgram(program: string[]): {|
   ];
 
   for (const line of program) {
+    sourceCodeStack.push(`/* ${line} */`);
     const matchResult = parseProgramRe.exec(line);
     if (!matchResult) {
       throw new Error(
@@ -65,10 +66,9 @@ export function parseProgram(program: string[]): {|
 
   const sourceCode = sourceCodeStack.join('\n');
   const func = new Function('input', sourceCode);
-  func.displayName = 'aluProgram';
 
   return {
-    sourceCode,
+    sourceCode: `function program(input) {\n${sourceCode}\n}`,
     // $FlowIgnoreError[incompatible-exact]
     func,
   };
