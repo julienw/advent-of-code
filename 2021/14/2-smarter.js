@@ -90,7 +90,7 @@ async function run() {
 
     currentLength = newLength;
     console.log(i, '->', newLength);
-    //console.log(template);
+    console.log(String.fromCharCode(...template));
   }
 
   const frequencies = template.reduce((frequencies, charCode) => {
