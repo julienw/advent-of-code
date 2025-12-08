@@ -11,7 +11,7 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   parserOptions: {
-    ecmaVersion: '2017',
+    ecmaVersion: '2024',
     ecmaFeatures: {
       experimentalObjectRestSpread: true,
     },
